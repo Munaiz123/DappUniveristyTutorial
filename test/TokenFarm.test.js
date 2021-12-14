@@ -58,5 +58,18 @@ contract('TokenFarm', ([owner, investor])=>{ // owner = the person who deplopyed
 
   })
 
+  describe('Farming Tokens', async()=>{
+    it('rewards investors for staking mDai tokens', async() =>{
+      let result
+
+      // check investor balance before staking
+      result = await daiToken.balanceOf(investor)
+      assert.equal(result.toString(), tokens('100'), 'investor Mock DAI wallet balance correct before staking')
+
+      // stake mock DAI tokens
+      await daiToken.approve(tokenFarm.address, tokens('100'), {from:investor})
+      await tokenFarm.stakeTokens(tokens('100'), {from: investor})
+    })
+  })
 
 })
