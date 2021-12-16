@@ -10,7 +10,7 @@ const Main = props =>{
     let amount;
     amount = input.toString()
     amount = window.web3.utils.toWei(amount, 'Ether')
-    // props.stakeTokens(amount)
+    props.stakeTokens(amount)
   }
 
 
