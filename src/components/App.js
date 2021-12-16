@@ -40,6 +40,7 @@ class App extends Component {
     await this.loadDappToken(networkId, web3)
     await this.loadTokenFarm(networkId, web3)
 
+    this.setState({loading:false})
   }
 
   async loadDaiToken(networkId,web3){
@@ -77,12 +78,12 @@ class App extends Component {
     if(tokenFarmData){
       console.log('Token Farm Address -> ',tokenFarmData.address)
       let tokenFarm = new web3.eth.Contract(TokenFarm.abi, tokenFarmData.address)
-      // let tokenFarmBalance = await tokenFarm.methods.balanceOf(this.state.account).call().toString()
-      // console.log('Token Farm Balance =' , tokenFarmBalance)
+      let stakingBalance = await tokenFarm.methods.stakingBalance(this.state.account).call().toString()
+      console.log('Token Farm Staking Balance =' , stakingBalance.toString())
 
 
       this.setState({tokenFarm})
-      // this.setState({tokenFarmBalance})
+      this.setState({stakingBalance:stakingBalance.toString()})
 
     } else {
       window.alert("TokenFarm contract not deployed to detected network")
