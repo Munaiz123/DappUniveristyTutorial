@@ -34,7 +34,6 @@ class App extends Component {
     this.setState({account:accounts[0]})
 
     const networkId = await web3.eth.net.getId()
-    console.log('NETWORK ID', networkId)
 
     await this.loadDaiToken(networkId, web3)
     await this.loadDappToken(networkId, web3)
@@ -46,10 +45,8 @@ class App extends Component {
   async loadDaiToken(networkId,web3){
     let daiTokenData = DaiToken.networks[networkId]
     if(daiTokenData){
-      console.log('Dai Token Address -> ',daiTokenData.address)
       let daiToken = new web3.eth.Contract(DaiToken.abi, daiTokenData.address)
       let daiTokenBalance = await daiToken.methods.balanceOf(this.state.account).call()
-      console.log('DaiToken Balance =' , daiTokenBalance.toString())
 
       this.setState({daiToken})
       this.setState({daiTokenBalance:daiTokenBalance.toString()})
@@ -61,10 +58,10 @@ class App extends Component {
   async loadDappToken(networkId,web3){
     let dappTokenData = DappToken.networks[networkId]
     if(dappTokenData){
-      console.log('Dapp Token Balance -> ',dappTokenData.address)
+
       let dappToken = new web3.eth.Contract(DappToken.abi, dappTokenData.address)
       let dappTokenBalance = await dappToken.methods.balanceOf(this.state.account).call()
-      console.log('Dapp Token Balance =' , dappTokenBalance.toString())
+
 
       this.setState({dappToken})
       this.setState({dappTokenBalance:dappTokenBalance.toString()})
@@ -76,11 +73,8 @@ class App extends Component {
   async loadTokenFarm(networkId,web3){
     let tokenFarmData = TokenFarm.networks[networkId]
     if(tokenFarmData){
-      console.log('Token Farm Address -> ',tokenFarmData.address)
       let tokenFarm = new web3.eth.Contract(TokenFarm.abi, tokenFarmData.address)
       let stakingBalance = await tokenFarm.methods.stakingBalance(this.state.account).call().toString()
-      console.log('Token Farm Staking Balance =' , stakingBalance.toString())
-
 
       this.setState({tokenFarm})
       this.setState({stakingBalance:stakingBalance.toString()})
