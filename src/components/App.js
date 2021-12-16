@@ -15,6 +15,13 @@ class App extends Component {
     super(props)
     this.state = {
       account: '0x0',
+      daiToken: {},
+      dappToken:{},
+      tokenFarm:{},
+      daiTokenBalance:'0',
+      dappTokenBalance:'0',
+      stakingBalance: '0',
+      loading: true
     }
 
   }
