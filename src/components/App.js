@@ -1,15 +1,44 @@
 import React, { Component } from 'react'
+import Web3 from 'web3'
+
 import Navbar from './Navbar'
 import './App.css'
 
 class App extends Component {
 
+  async componentDidMount(){
+    await this.loadWeb3()
+    await this.loadBlockchainData()
+  }
+
   constructor(props) {
     super(props)
     this.state = {
-      account: '0x0'
+      account: '0x0',
+    }
+
+  }
+
+  async loadBlockchainData(){ // fetching meta mask account address ?
+    const web3 = window.web3
+    const accounts = await web3.eth.getAccounts()
+    console.log("accounts =>", accounts)
+    this.setState({account:accounts[0]})
+  }
+
+  async loadWeb3(){ // connecting react app to MetaMask wallet via web3!
+    if(window.ethereum){
+      window.web3= new Web3(window.ethereum)
+      await window.ethereum.enable()
+    }
+    else if(window.web3){
+      window.web3 = new Web3(window.web3.currentProvider)
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
     }
   }
+
 
   render() {
     return (
