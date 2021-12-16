@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Web3 from 'web3'
 
 import Navbar from './Navbar'
+import Main from "./Main"
 import './App.css'
 import DaiToken from '../abis/DaiToken.json'
 import DappToken from '../abis/DappToken.json'
@@ -74,7 +75,7 @@ class App extends Component {
     let tokenFarmData = TokenFarm.networks[networkId]
     if(tokenFarmData){
       let tokenFarm = new web3.eth.Contract(TokenFarm.abi, tokenFarmData.address)
-      let stakingBalance = await tokenFarm.methods.stakingBalance(this.state.account).call().toString()
+      let stakingBalance = await tokenFarm.methods.stakingBalance(this.state.account).call()
 
       this.setState({tokenFarm})
       this.setState({stakingBalance:stakingBalance.toString()})
@@ -99,6 +100,14 @@ class App extends Component {
 
 
   render() {
+    let content;
+    if(this.state.loading) content = <h6 id='loader' className="text-center">Loading...</h6>
+    else content = <Main
+                      daiTokenBalance={this.state.daiTokenBalance}
+                      dappTokenBalance={this.state.dappTokenBalance}
+                      stakingBalance={this.state.stakingBalance}
+                    />
+
     return (
       <div>
         <Navbar account={this.state.account} />
@@ -112,7 +121,7 @@ class App extends Component {
                   rel="noopener noreferrer"
                 >
                 </a>
-                <h1>Hello, World!</h1>
+                {content}
               </div>
             </main>
           </div>
