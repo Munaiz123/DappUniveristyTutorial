@@ -13,6 +13,11 @@ const Main = props =>{
     props.stakeTokens(amount)
   }
 
+  function unStakeOnClick(event){
+    event.preventDefault()
+    props.unstakeTokens()
+  }
+
 
   return(
     <div id='content' className="mt-3">
@@ -60,6 +65,7 @@ const Main = props =>{
               </div>
               <button type="submit" className="btn btn-primary btn-block btn-lg">STAKE!</button>
             </form>
+            <button type="submit" onClick={unStakeOnClick}>STAKE!</button>
 
         </div>
       </div>
